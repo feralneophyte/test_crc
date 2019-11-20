@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 2.6)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
+PROJECT(test-crc)
+
+SET(Boost_USE_STATIC_LIBS OFF)
+SET(Boost_USE_MULTITHREAD ON)
+FIND_PACKAGE(Boost 1.71.0 REQUIRED COMPONENTS iostreams program_options)
+IF(Boost_FOUND)
+  INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+  LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+ENDIF(Boost_FOUND)
+
+SET(USED_LIBS ${Boost_SYSTEM_LIBRARY} ${Boost_IOSTREAM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY})
+
+ADD_EXECUTABLE(test-crc src/test-crc.cpp src/infile_m.cpp src/excp.cpp src/outfile.cpp src/params.cpp)
+TARGET_LINK_LIBRARIES(test-crc ${USED_LIBS})
